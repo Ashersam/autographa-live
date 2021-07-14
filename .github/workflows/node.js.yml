@@ -5,55 +5,55 @@ on:
         branches: [master]
 
 jobs:
-    build:
-        runs-on: ${{ matrix.os }}
-        env:
-            CI: false
-        strategy:
-            matrix:
-                node-version: [14.5]
-                os: [ubuntu-latest]
+#     build:
+#         runs-on: ${{ matrix.os }}
+#         env:
+#             CI: false
+#         strategy:
+#             matrix:
+#                 node-version: [14.5]
+#                 os: [ubuntu-latest]
 
-        steps:
-            - uses: actions/checkout@v2
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v1
-              with:
-                  node-version: ${{ matrix.node-version }}
-            - run: |
-                  node --version
-                  npm --version
+#         steps:
+#             - uses: actions/checkout@v2
+#             - name: Use Node.js ${{ matrix.node-version }}
+#               uses: actions/setup-node@v1
+#               with:
+#                   node-version: ${{ matrix.node-version }}
+#             - run: |
+#                   node --version
+#                   npm --version
 
-            - name: set @bitregistry translation-help
-              run: npm config set '@bit:registry' https://node.bit.dev
+#             - name: set @bitregistry translation-help
+#               run: npm config set '@bit:registry' https://node.bit.dev
 
-            - name: npm install
-              run: npm ci
+#             - name: npm install
+#               run: npm ci
             
-            - name: memory allocation
-              run:  export NODE_OPTIONS=--max_old_space_size=8096
+#             - name: memory allocation
+#               run:  export NODE_OPTIONS=--max_old_space_size=8096
 
-            # - name: Read version and commit sha
-            #   run:
-            #       echo "::set-env name=HASH::$(node -p -e "'${{ github.sha }}'.substring(0, 7)")"
-            #       echo "::set-env name=APP_VERSION::$(node -p -e "require('./package.json').version")"
+#             # - name: Read version and commit sha
+#             #   run:
+#             #       echo "::set-env name=HASH::$(node -p -e "'${{ github.sha }}'.substring(0, 7)")"
+#             #       echo "::set-env name=APP_VERSION::$(node -p -e "require('./package.json').version")"
 
-            # - name: Set x64 artifact name
-            #   run: echo "::set-env name=ARTIFACT_X64::$(echo "Autographa-linux-x64-${{ env.APP_VERSION }}.exe")"
+#             # - name: Set x64 artifact name
+#             #   run: echo "::set-env name=ARTIFACT_X64::$(echo "Autographa-linux-x64-${{ env.APP_VERSION }}.exe")"
 
-            - name: package
-              id: package
-              run: |
-                  npm run electron-pack
+#             - name: package
+#               id: package
+#               run: |
+#                   npm run electron-pack
 
-            - name: Cleanup artifacts
-              run: |
-                  npx rimraf "dist/!(*.deb|*.AppImage|*.dmg)"
-            - name: Upload artifacts
-              uses: actions/upload-artifact@v1
-              with:
-                  name: Autographa
-                  path: dist
+#             - name: Cleanup artifacts
+#               run: |
+#                   npx rimraf "dist/!(*.deb|*.AppImage|*.dmg)"
+#             - name: Upload artifacts
+#               uses: actions/upload-artifact@v1
+#               with:
+#                   name: Autographa
+#                   path: dist
                   
     build-mac:
         runs-on: ${{ matrix.os }}
@@ -73,14 +73,12 @@ jobs:
             - run: |
                   node --version
                   npm --version
-            - name: set @bitregistry translation-help
-              run: npm config set '@bit:registry' https://node.bit.dev
 
             - name: npm install
               run: npm ci
               
             - name: memory allocation
-              run:  export NODE_OPTIONS=--max_old_space_size=4096
+              run:  export NODE_OPTIONS=--max_old_space_size=8096
 
             # - name: Read version and commit sha
             #   run: |
