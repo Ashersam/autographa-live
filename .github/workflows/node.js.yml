@@ -78,7 +78,9 @@ jobs:
               run: npm ci
               
             - name: memory allocation
-              run:  export NODE_OPTIONS=--max_old_space_size=8096
+              run:  export NODE_OPTIONS=--max_old_space_size=8096             
+            - name: set @bitregistry translation-help
+              run: npm config set '@bit:registry' https://node.bit.dev
 
             # - name: Read version and commit sha
             #   run: |
