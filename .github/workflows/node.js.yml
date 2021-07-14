@@ -29,6 +29,9 @@ jobs:
 
             - name: npm install
               run: npm ci
+            
+            - name: memory allocation
+              run:  export NODE_OPTIONS=--max_old_space_size=8096
 
             # - name: Read version and commit sha
             #   run:
@@ -75,6 +78,9 @@ jobs:
 
             - name: npm install
               run: npm ci
+              
+            - name: memory allocation
+              run:  export NODE_OPTIONS=--max_old_space_size=4096
 
             # - name: Read version and commit sha
             #   run: |
